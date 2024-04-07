@@ -1,5 +1,18 @@
-import { Controller, Get, Post, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Put,
+  Body,
+  Param,
+  ConflictException,
+  NotFoundException,
+  HttpCode,
+} from '@nestjs/common';
 import { ClientsService } from './clients.service';
+import { CreateClientDto } from 'src/dto/create-client.dto';
+import { UpdateClientDto } from 'src/dto/update-client.dto';
 
 @Controller('clients')
 export class ClientsController {
@@ -7,26 +20,46 @@ export class ClientsController {
 
   @Get()
   findAll() {
-    return 'Get all clients';
+    return this.clientService.findAll();
   }
 
   @Get(':id')
-  findOne() {
-    return 'Get one client';
+  async findOne(@Param('id') id: string) {
+    const client = await this.clientService.findOne(id);
+    if (!client) {
+      throw new NotFoundException('Client not found');
+    }
+    return client;
   }
 
   @Post()
-  create() {
-    return 'Create client';
+  async create(@Body() body: CreateClientDto) {
+    try {
+      return await this.clientService.create(body);
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new ConflictException('Client already exists');
+      }
+      throw error;
+    }
   }
 
   @Delete(':id')
-  delete() {
-    return 'Delete client';
+  @HttpCode(204)
+  async delete(@Param('id') id: string) {
+    const client = await this.clientService.deleteOne(id);
+    if (!client) {
+      throw new NotFoundException('Client not found');
+    }
+    return client;
   }
 
   @Put(':id')
-  update() {
-    return 'Update client';
+  async update(@Param('id') id: string, @Body() body: UpdateClientDto) {
+    const client = await this.clientService.updateOne(id, body);
+    if (!client) {
+      throw new NotFoundException('Client not found');
+    }
+    return client;
   }
 }

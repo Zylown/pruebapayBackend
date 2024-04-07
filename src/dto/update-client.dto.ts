@@ -14,7 +14,6 @@ export class UpdateClientDto {
   @IsOptional()
   email?: string;
 
-  @IsString()
   @IsOptional()
   phone?: string;
 

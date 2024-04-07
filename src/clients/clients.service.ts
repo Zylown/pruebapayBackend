@@ -19,7 +19,7 @@ export class ClientsService {
   }
 
   findAll() {
-    this.clientsModel.find();
+    return this.clientsModel.find();
   }
 
   async findOne(id: string) {
@@ -31,6 +31,6 @@ export class ClientsService {
   }
 
   async updateOne(id: string, updateClient: UpdateClientDto) {
-    return this.clientsModel.findByIdAndUpdate(id, updateClient);
+    return this.clientsModel.findByIdAndUpdate(id, updateClient, { new: true });
   }
 }
