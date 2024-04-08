@@ -3,30 +3,30 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 @Schema({
   timestamps: true,
 })
+
 export class Clients {
-  @Prop({
-    unique: true,
-    trim: true,
-  })
-  id: string;
   @Prop({
     type: String,
     unique: true,
     trim: true,
   })
   dni: string;
+
   @Prop({
     trim: true,
   })
-  names: string;
+  names?: string;
+
   @Prop({
     trim: true,
   })
-  mount: number;
+  amount: number;
+
   @Prop({
     trim: true,
   })
   phone: string;
+
   @Prop({
     trim: true,
   })

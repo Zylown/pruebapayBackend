@@ -19,5 +19,5 @@ export class UpdateClientDto {
 
   @IsNumber()
   @IsOptional()
-  mount?: number;
+  amount?: number;
 }

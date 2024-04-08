@@ -23,6 +23,19 @@ export class ClientsController {
     return this.clientService.findAll();
   }
 
+  @Post()
+  async create(@Body() body: CreateClientDto) {
+    try {
+      return await this.clientService.create(body);
+    } catch (error) {
+      console.log(error)
+      if (error.code === 11000) {
+        throw new ConflictException('Client already existsx');
+      }
+      throw error;
+    }
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const client = await this.clientService.findOne(id);
@@ -30,18 +43,6 @@ export class ClientsController {
       throw new NotFoundException('Client not found');
     }
     return client;
-  }
-
-  @Post()
-  async create(@Body() body: CreateClientDto) {
-    try {
-      return await this.clientService.create(body);
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new ConflictException('Client already exists');
-      }
-      throw error;
-    }
   }
 
   @Delete(':id')

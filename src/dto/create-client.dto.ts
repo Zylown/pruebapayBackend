@@ -1,9 +1,9 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty,  IsString } from 'class-validator';
 
 export class CreateClientDto {
   @IsString()
-  @IsNotEmpty()
-  names: string;
+  // @IsNotEmpty()
+  names?: string;
 
   @IsNotEmpty()
   dni: string;
@@ -16,6 +16,5 @@ export class CreateClientDto {
   phone: string;
   
   @IsNotEmpty()
-  @IsNumber()
-  mount: number;
+  amount: number;
 }
