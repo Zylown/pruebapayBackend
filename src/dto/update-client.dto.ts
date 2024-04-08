@@ -10,6 +10,10 @@ export class UpdateClientDto {
   dni?: string;
 
   @IsString()
+  @IsOptional()
+  options?: string;
+
+  @IsString()
   @IsEmail()
   @IsOptional()
   email?: string;

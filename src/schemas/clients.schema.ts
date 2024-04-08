@@ -1,9 +1,10 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
-  timestamps: true,
+  timestamps: {
+    currentTime: () => new Date(),
+  },
 })
-
 export class Clients {
   @Prop({
     type: String,
@@ -11,6 +12,11 @@ export class Clients {
     trim: true,
   })
   dni: string;
+
+  @Prop({
+    trim: true,
+  })
+  options: string;
 
   @Prop({
     trim: true,
