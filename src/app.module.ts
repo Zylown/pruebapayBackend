@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule } from './clients/clients.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DniService } from './dni/dni.service';
+import { DniController } from './dni/dni.controller';
 
 @Module({
   imports: [
@@ -9,5 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     ),
     ClientsModule,
   ],
+  providers: [DniService],
+  controllers: [DniController],
 })
 export class AppModule {}
