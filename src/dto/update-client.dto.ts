@@ -1,27 +1,12 @@
-import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
+import { z } from 'zod';
 
-export class UpdateClientDto {
-  @IsString()
-  @IsOptional()
-  names?: string;
+export const UpdateClientDto = z.object({
+  names: z.string().min(3).max(255).optional(),
+  dni: z.string().length(8).optional(),
+  options: z.string().array().nonempty().optional(),
+  email: z.string().email().optional(),
+  phone: z.string().length(9).optional(),
+  amount: z.number().int().positive().optional(),
+});
 
-  @IsString()
-  @IsOptional()
-  dni?: string;
-
-  @IsString()
-  @IsOptional()
-  options?: string;
-
-  @IsString()
-  @IsEmail()
-  @IsOptional()
-  email?: string;
-
-  @IsOptional()
-  phone?: string;
-
-  @IsNumber()
-  @IsOptional()
-  amount?: number;
-}
+export type UpdateClientDto = z.infer<typeof UpdateClientDto>;

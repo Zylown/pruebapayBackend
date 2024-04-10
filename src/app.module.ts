@@ -3,12 +3,15 @@ import { ClientsModule } from './clients/clients.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DniService } from './dni/dni.service';
 import { DniController } from './dni/dni.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
+  // imports: [MongooseModule.forRoot(process.env.MONGO_DB), ClientsModule],
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://zylown20:NQW7vbcc9gSUUYTm@cluster0.0gdqwuk.mongodb.net/pruebapaydb',
-    ),
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
+    MongooseModule.forRoot(process.env.MONGO_DB),
     ClientsModule,
   ],
   providers: [DniService],

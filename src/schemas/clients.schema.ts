@@ -1,9 +1,13 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
+var moment = require('moment'); // require
+
+function formatDate() {
+  return moment().format('DD-MM-YYYY:HH:mm:ss');
+}
+
 @Schema({
-  timestamps: {
-    currentTime: () => new Date(),
-  },
+  timestamps: true,
 })
 export class Clients {
   @Prop({
@@ -37,5 +41,11 @@ export class Clients {
     trim: true,
   })
   email: string;
+
+  @Prop({ type: String, default: formatDate })
+  createdAt: string;
+
+  @Prop({ type: String, default: formatDate })
+  updatedAt: string;
 }
 export const ClientsSchema = SchemaFactory.createForClass(Clients);

@@ -9,6 +9,7 @@ import {
   ConflictException,
   NotFoundException,
   HttpCode,
+  BadRequestException,
 } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from 'src/dto/create-client.dto';
@@ -25,10 +26,19 @@ export class ClientsController {
 
   @Post()
   async create(@Body() body: CreateClientDto) {
+    const validationResult = CreateClientDto.safeParse(body);
+    if (!validationResult.success) {
+      console.log(validationResult.error.errors[0].message);
+      // throw new BadRequestException(validationResult.error.errors[0].message);// esto es para que solo muestre el primer error
+      throw new BadRequestException(
+        validationResult.error.errors.map((err) => err.message),
+      );
+    }
+
     try {
       return await this.clientService.create(body);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       if (error.code === 11000) {
         throw new ConflictException('Client already existsx');
       }
