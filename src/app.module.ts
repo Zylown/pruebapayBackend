@@ -4,6 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { DniService } from './dni/dni.service';
 import { DniController } from './dni/dni.controller';
 import { ConfigModule } from '@nestjs/config';
+import { MovimientosService } from './movimientos/movimientos.service';
+import { MovimientosController } from './movimientos/movimientos.controller';
 
 @Module({
   // imports: [MongooseModule.forRoot(process.env.MONGO_DB), ClientsModule],
@@ -14,7 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forRoot(process.env.MONGO_DB),
     ClientsModule,
   ],
-  providers: [DniService],
-  controllers: [DniController],
+  providers: [DniService, MovimientosService],
+  controllers: [DniController, MovimientosController],
 })
 export class AppModule {}
