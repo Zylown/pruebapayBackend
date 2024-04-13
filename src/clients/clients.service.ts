@@ -33,4 +33,9 @@ export class ClientsService {
   async updateOne(id: string, updateClient: UpdateClientDto) {
     return this.clientsModel.findByIdAndUpdate(id, updateClient, { new: true });
   }
+
+  //find by dni
+  async findByDni(dni: string) {
+    return this.clientsModel.findOne({ dni });
+  }
 }

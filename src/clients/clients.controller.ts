@@ -40,7 +40,8 @@ export class ClientsController {
     } catch (error) {
       console.log(error);
       if (error.code === 11000) {
-        throw new ConflictException('Client already existsx');
+        // code 11000 es para cuando hay un duplicado en la base de datos
+        throw new ConflictException('Cliente con DNI ya existente');
       }
       throw error;
     }
@@ -72,5 +73,20 @@ export class ClientsController {
       throw new NotFoundException('Client not found');
     }
     return client;
+  }
+
+  //find by dni
+  @Get('dni/:dni')
+  async findByDni(@Param('dni') dni: string) {
+    const data = await this.clientService.findByDni(dni);
+    if (!data) {
+      throw new NotFoundException('Dni no encontrado');
+    }
+    return {
+      // dni: data?.dni,
+      nombre: data?.names,
+      email: data?.email,
+      phone: data?.phone,
+    };
   }
 }
