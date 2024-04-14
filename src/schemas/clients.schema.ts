@@ -20,17 +20,7 @@ export class Clients {
   @Prop({
     trim: true,
   })
-  options: string;
-
-  @Prop({
-    trim: true,
-  })
   names?: string;
-
-  @Prop({
-    trim: true,
-  })
-  amount: number;
 
   @Prop({
     trim: true,
