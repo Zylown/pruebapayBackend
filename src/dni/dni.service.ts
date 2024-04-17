@@ -5,7 +5,14 @@ import puppeteer from 'puppeteer';
 export class DniService {
   async getDni(inputValue: string) {
     try {
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+        ],
+      });
       const page = await browser.newPage();
       await page.goto('https://eldni.com/pe/buscar-datos-por-dni', {
         timeout: 0,
