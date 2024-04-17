@@ -21,14 +21,20 @@ export class DniService {
         timeout: 0,
       });
 
-      await page.type(
-        '#buscar-datos-por-dni>.form-group.input-clear>.form-input',
-        inputValue,
-      );
+      await page.type('#dni', inputValue);
+
+      // await page.type(
+      //   '#buscar-datos-por-dni>.form-group.input-clear>.form-input',
+      //   inputValue,
+      // );
 
       await page.click('#btn-buscar-datos-por-dni');
 
-      await page.waitForSelector('.form-group');
+      // await page.waitForSelector('.form-group');
+      await page.waitForSelector(
+        '#buscar-datos-por-dni>.form-group.input-clear>.form-input',
+        { visible: true },
+      );
 
       const result = await page.evaluate(() => {
         const nombreCompleto =
