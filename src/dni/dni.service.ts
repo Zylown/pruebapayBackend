@@ -14,11 +14,17 @@ export class DniService {
         ],
       });
       const page = await browser.newPage();
+
+      page.setDefaultNavigationTimeout(0);
+
       await page.goto('https://eldni.com/pe/buscar-datos-por-dni', {
         timeout: 0,
       });
 
-      await page.type('#dni', inputValue);
+      await page.type(
+        '#buscar-datos-por-dni>.form-group.input-clear>.form-input',
+        inputValue,
+      );
 
       await page.click('#btn-buscar-datos-por-dni');
 
