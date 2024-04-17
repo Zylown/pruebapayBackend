@@ -12,6 +12,8 @@ export class DniService {
           '--disable-setuid-sandbox',
           '--disable-dev-shm-usage',
         ],
+        ignoreDefaultArgs: ['--disable-extensions'],
+        ignoreHTTPSErrors: true,
       });
       const page = await browser.newPage();
 
@@ -19,33 +21,36 @@ export class DniService {
 
       await page.goto('https://eldni.com/pe/buscar-datos-por-dni', {
         timeout: 0,
+        // waitUntil: 'networkidle2',
       });
 
-      await page.type('#dni', inputValue);
+      console.log('Página cargada correctamente');
 
-      // await page.type(
-      //   '#buscar-datos-por-dni>.form-group.input-clear>.form-input',
-      //   inputValue,
-      // );
+      await page.type(
+        '#buscar-datos-por-dni>.form-group.input-clear>.form-input',
+        inputValue,
+      );
+
+      console.log('Campo de búsqueda completado');
 
       await page.click('#btn-buscar-datos-por-dni');
 
-      // await page.waitForSelector('.form-group');
-      await page.waitForSelector(
-        '#buscar-datos-por-dni>.form-group.input-clear>.form-input',
-        { visible: true },
-      );
+      console.log('Botón de búsqueda clickeado');
+
+      await page.waitForSelector('.form-group');
+
+      console.log('Selector encontrado');
 
       const result = await page.evaluate(() => {
         const nombreCompleto =
           document.querySelector('#completos').attributes[2].value;
         return nombreCompleto;
       });
+      console.log('Resultado obtenido:', result);
       await browser.close();
-      // console.log(result);
       return result;
     } catch (error) {
-      console.log(error);
+      console.log('Error en getDni:', error);
       return null;
     }
   }
