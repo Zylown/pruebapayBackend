@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule } from './clients/clients.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DniService } from './dni/dni.service';
-import { DniController } from './dni/dni.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MovimientosModule } from './movimientos/movimientos.module';
 
@@ -16,7 +14,5 @@ import { MovimientosModule } from './movimientos/movimientos.module';
     ClientsModule,
     MovimientosModule,
   ],
-  providers: [DniService],
-  controllers: [DniController],
 })
 export class AppModule {}
