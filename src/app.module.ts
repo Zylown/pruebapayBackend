@@ -10,7 +10,7 @@ import { MovimientosModule } from './movimientos/movimientos.module';
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),
-    MongooseModule.forRoot(process.env.MONGO_DB),
+    MongooseModule.forRoot(process.env.MONGO_DB), // para conectar a la base de datos de mongo que esta en .env
     ClientsModule,
     MovimientosModule,
   ],

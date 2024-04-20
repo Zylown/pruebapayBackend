@@ -17,7 +17,13 @@ export class Movimientos {
     type: String,
     trim: true,
   })
-  dni: string;
+  id: string;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
+  names: string;
 
   @Prop({
     trim: true,

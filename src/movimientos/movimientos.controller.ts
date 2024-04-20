@@ -34,7 +34,7 @@ export class MovimientosController {
       console.log(error);
       if (error.code === 11000) {
         // code 11000 es para cuando hay un duplicado en la base de datos
-        throw new ConflictException('Movimiento con DNI ya existente');
+        throw new ConflictException('Movimiento con nombre ya existente');
       }
       throw error;
     }
