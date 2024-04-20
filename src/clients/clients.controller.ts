@@ -47,14 +47,14 @@ export class ClientsController {
     }
   }
 
-  @Get(':id')
+  /*@Get(':id')
   async findOne(@Param('id') id: string) {
     const client = await this.clientService.findOne(id);
     if (!client) {
       throw new NotFoundException('Client not found');
     }
     return client;
-  }
+  }*/
 
   @Delete(':id')
   @HttpCode(204)

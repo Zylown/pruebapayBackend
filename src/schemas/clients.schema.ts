@@ -14,11 +14,15 @@ export class Clients {
     type: String,
     unique: true,
     trim: true,
+    strict: true, // para que no se puedan guardar campos que no estén en el esquema
   })
   dni: string;
 
   @Prop({
+    type: String,
     trim: true,
+    unique: true,
+    strict: true, // para que no se puedan guardar campos que no estén en el esquema
   })
   names?: string;
 

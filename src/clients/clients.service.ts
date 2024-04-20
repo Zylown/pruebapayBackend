@@ -7,9 +7,14 @@ import { UpdateClientDto } from 'src/dto/clients/update-client.dto';
 
 @Injectable()
 export class ClientsService {
-  constructor(
-    @InjectModel(Clients.name) private clientsModel: Model<Clients>,
-  ) {}
+  constructor(@InjectModel(Clients.name) private clientsModel: Model<Clients>) {
+    this.ensureIndexes(); // para crear el índice al inicializar la conexión a la base de datos
+  }
+
+  // Método para crear el índice al inicializar la conexión a la base de datos
+  async ensureIndexes() {
+    await this.clientsModel.createIndexes();
+  }
 
   async create(createClient: CreateClientDto) {
     /*const createdClient = this.clientsModel.create();
@@ -22,9 +27,9 @@ export class ClientsService {
     return this.clientsModel.find();
   }
 
-  async findOne(id: string) {
+  /*async findOne(id: string) {
     return this.clientsModel.findById(id);
-  }
+  }*/
 
   async deleteOne(id: string) {
     return this.clientsModel.findByIdAndDelete(id);
