@@ -1,1 +1,1 @@
-web: npm nest start
+web: npm start
