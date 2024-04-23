@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const CreateMovimientoDto = z.object({
+  idMov: z.string(),
   names: z
     .string()
     .min(3, { message: 'El nombre debe tener al menos 3 caracteres' })
@@ -14,6 +15,11 @@ export const CreateMovimientoDto = z.object({
     .min(1, { message: 'El monto debe ser mayor que cero' }), // esto es para que el monto sea mayor que cero y sea un entero
 });
 
-CreateMovimientoDto.required({ names: true, options: true, amount: true }); // esto es para que el names sea requerido y las opciones tambien
+CreateMovimientoDto.required({
+  names: true,
+  options: true,
+  amount: true,
+  idMov: true,
+}); // esto es para que el names sea requerido y las opciones tambien
 
 export type CreateMovimientoDto = z.infer<typeof CreateMovimientoDto>;
