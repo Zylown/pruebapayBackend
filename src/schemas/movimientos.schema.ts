@@ -1,10 +1,9 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 // SchemaFactory es una clase que se encarga de crear un esquema de mongoose
-
-var moment = require('moment'); // require
+import * as moment from 'moment-timezone';
 
 function formatDate() {
-  return moment().format('DD-MM-YYYY:HH:mm:ss');
+  return moment().tz('America/Lima').format('DD-MM-YYYY:HH:mm:ss');
 }
 // movimientos del dia
 @Schema({
@@ -18,6 +17,12 @@ export class Movimientos {
     trim: true,
   })
   id: string;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
+  idMov: string;
 
   @Prop({
     type: String,
