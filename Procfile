@@ -1,1 +1,1 @@
-web: pnpm nest start
+web: npm nest start
