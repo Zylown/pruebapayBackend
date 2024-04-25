@@ -1,9 +1,9 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
-var moment = require('moment'); // require
+import * as moment from 'moment-timezone';
 
 function formatDate() {
-  return moment().format('DD-MM-YYYY:HH:mm:ss');
+  return moment().tz('America/Lima').format('DD-MM-YYYY:HH:mm:ss');
 }
 
 @Schema({
