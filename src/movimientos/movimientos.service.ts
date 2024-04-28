@@ -2,7 +2,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Movimientos } from './../schemas/movimientos.schema';
 import { Injectable } from '@nestjs/common';
-import { CreateMovimientoDto } from 'src/dto/movimientos/create-movimiento.dto';
+import { CreateMovimientoDto } from './dto/create-movimiento.dto';
 
 @Injectable()
 export class MovimientosService {

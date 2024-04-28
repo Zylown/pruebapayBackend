@@ -6,15 +6,18 @@ import {
   Get,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { MovimientosService } from './movimientos.service';
-import { CreateMovimientoDto } from 'src/dto/movimientos/create-movimiento.dto';
+import { CreateMovimientoDto } from './dto/create-movimiento.dto';
+import { MovimientosGuard } from './movimientos.guard';
 
 @Controller('clientes/movimientos')
 export class MovimientosController {
   constructor(private movimientoService: MovimientosService) {}
 
   @Get()
+  // @UseGuards(MovimientosGuard)
   findAll() {
     return this.movimientoService.findAll();
   }
