@@ -10,7 +10,10 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
-import { JwtAuthGuard } from './roles/jwt-auth.guard';
+import { JwtAuthGuard } from './guard/jwt-auth.guard';
+import { Roles } from './decorators/roles.decorator';
+import { RolesGuard } from './guard/roles.guard';
+import { Role } from './enums/rol.enum';
 
 interface RequestWithUser extends Request {
   user: {
@@ -51,7 +54,8 @@ export class AuthController {
   }
 
   @Get('profile')
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard) // esto es para que se use el guard de jwt y el guard de roles
   profile(@Req() req: RequestWithUser) {
     return this.authService.profile(req.user);
   }

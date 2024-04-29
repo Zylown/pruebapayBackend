@@ -26,11 +26,11 @@ export class AuthService {
 
   // Método para obtener la información del usuario autenticado
   async profile({ role }: { role: string }) {
-    if (role !== 'admin') {
-      throw new UnauthorizedException(
-        'No tienes permiso para acceder a esta información',
-      );
-    }
+    // if (role !== 'admin') {
+    //   throw new UnauthorizedException(
+    //     'No tienes permiso para acceder a esta información',
+    //   );
+    // }
     return await this.usersService.getAll();
   }
 }

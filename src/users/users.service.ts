@@ -15,9 +15,9 @@ export class UsersService {
     return await this.usersModel.find();
   }
 
-  async findByRole(role: string) {
-    return this.usersModel.findOne({ role });
-  }
+  // async findByRole(role: string) {
+  //   return this.usersModel.findOne({ role });
+  // }
 
   async findOne(username: string) {
     return this.usersModel.findOne({ username });

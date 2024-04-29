@@ -5,7 +5,6 @@ import { ConfigModule } from '@nestjs/config';
 import { MovimientosModule } from './movimientos/movimientos.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-// import { PassportModule } from '@nestjs/passport';
 
 @Module({
   // imports: [MongooseModule.forRoot(process.env.MONGO_DB), ClientsModule],
@@ -18,7 +17,6 @@ import { AuthModule } from './auth/auth.module';
     MovimientosModule,
     UsersModule,
     AuthModule,
-    // PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
 })
 export class AppModule {}

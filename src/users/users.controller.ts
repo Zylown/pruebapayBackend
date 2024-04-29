@@ -11,16 +11,16 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { JwtAuthGuard } from 'src/auth/roles/jwt-auth.guard';
-import { Roles } from 'src/auth/roles/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { Request, Response } from 'express';
+// import { Roles } from '../auth/decorators/roles.decorator';
 
 @Controller('users')
 export class UsersController {
   constructor(private userService: UsersService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Roles('admin')
+  // @Roles('admin')
   @Get()
   async getAll(@Req() req: Request, @Res() res: Response) {
     const users = await this.userService.getAll();
