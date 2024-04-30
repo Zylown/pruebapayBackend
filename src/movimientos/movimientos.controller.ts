@@ -6,22 +6,18 @@ import {
   Get,
   Param,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { MovimientosService } from './movimientos.service';
 import { CreateMovimientoDto } from './dto/create-movimiento.dto';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/rol.enum';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
+@Auth(Role.ADMIN)
 @Controller('clientes/movimientos')
 export class MovimientosController {
   constructor(private movimientoService: MovimientosService) {}
 
   @Get()
-  @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   findAll() {
     return this.movimientoService.findAll();
   }

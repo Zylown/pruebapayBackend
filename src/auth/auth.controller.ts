@@ -14,6 +14,7 @@ import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { Roles } from './decorators/roles.decorator';
 import { RolesGuard } from './guard/roles.guard';
 import { Role } from './enums/rol.enum';
+import { Auth } from './decorators/auth.decorator';
 
 interface RequestWithUser extends Request {
   user: {
@@ -54,8 +55,9 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RolesGuard) // esto es para que se use el guard de jwt y el guard de roles
+  /*@Roles(Role.ADMIN)
+   @UseGuards(JwtAuthGuard, RolesGuard) // esto es para que se use el guard de jwt y el guard de roles*/
+  @Auth(Role.ADMIN)
   profile(@Req() req: RequestWithUser) {
     return this.authService.profile(req.user);
   }
