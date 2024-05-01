@@ -6,13 +6,9 @@ import {
   Res,
   Get,
   Req,
-  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
-import { JwtAuthGuard } from './guard/jwt-auth.guard';
-import { Roles } from './decorators/roles.decorator';
-import { RolesGuard } from './guard/roles.guard';
 import { Role } from './enums/rol.enum';
 import { Auth } from './decorators/auth.decorator';
 
@@ -54,6 +50,7 @@ export class AuthController {
     }
   }
 
+  // test de roles
   @Get('profile')
   /*@Roles(Role.ADMIN)
    @UseGuards(JwtAuthGuard, RolesGuard) // esto es para que se use el guard de jwt y el guard de roles*/

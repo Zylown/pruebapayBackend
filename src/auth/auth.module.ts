@@ -11,7 +11,7 @@ import { jwtConstants } from './jwt.constants';
     JwtModule.register({
       global: true, // esto es para que el módulo sea global y se pueda usar en toda la aplicación
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   // exports: [JwtModule],
