@@ -4,8 +4,9 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const allowedOrigins = process.env.SERVER.split(','); // se obtiene el servidor desde el archivo .env
   app.enableCors({
-    origin: 'http://localhost:5173', // para que solo se pueda acceder desde esta url
+    origin: allowedOrigins,
     credentials: true, // para que se envien las cookies
   }); // habilita el cors
   app.useGlobalPipes(
