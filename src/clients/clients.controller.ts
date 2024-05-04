@@ -20,7 +20,7 @@ import { Role } from 'src/auth/enums/rol.enum';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 
-@Roles(Role.ADMIN)
+@Roles(Role.ADMIN && Role.STANDARD)
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('clients')
 export class ClientsController {

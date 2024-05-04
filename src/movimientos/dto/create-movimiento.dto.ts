@@ -11,7 +11,6 @@ export const CreateMovimientoDto = z.object({
     .nonempty({ message: 'Debe seleccionar al menos una operación' }),
   amount: z
     .number()
-    .int()
     .min(1, { message: 'El monto debe ser mayor que cero' }), // esto es para que el monto sea mayor que cero y sea un entero
 });
 
