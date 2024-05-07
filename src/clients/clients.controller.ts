@@ -19,13 +19,15 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/rol.enum';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { Auth } from 'src/auth/decorators/auth.decorator';
 
-@Roles(Role.ADMIN && Role.STANDARD)
+@Roles(Role.ADMIN || Role.STANDARD)
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('clients')
 export class ClientsController {
   constructor(private clientService: ClientsService) {}
 
+  @Auth(Role.ADMIN)
   @Get()
   findAll() {
     return this.clientService.findAll();

@@ -12,11 +12,12 @@ import { CreateMovimientoDto } from './dto/create-movimiento.dto';
 import { Role } from 'src/auth/enums/rol.enum';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 
-@Auth(Role.ADMIN && Role.STANDARD)
+@Auth(Role.ADMIN || Role.STANDARD)
 @Controller('clientes/movimientos')
 export class MovimientosController {
   constructor(private movimientoService: MovimientosService) {}
 
+  @Auth(Role.ADMIN)
   @Get()
   findAll() {
     return this.movimientoService.findAll();

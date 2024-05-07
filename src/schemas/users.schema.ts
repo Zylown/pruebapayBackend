@@ -30,7 +30,7 @@ export class Users {
     trim: true,
     unique: true,
     required: true,
-    select: false, // para que no se muestre en las consultas
+    // select: false, // para que no se muestre en las consultas
   })
   password: string;
 
