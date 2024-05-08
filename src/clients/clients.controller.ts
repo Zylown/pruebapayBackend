@@ -10,29 +10,24 @@ import {
   NotFoundException,
   HttpCode,
   BadRequestException,
-  UseGuards,
 } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
-import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/rol.enum';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 
-@Roles(Role.ADMIN || Role.STANDARD)
-@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('clients')
 export class ClientsController {
   constructor(private clientService: ClientsService) {}
 
-  @Auth(Role.ADMIN)
+  @Auth(Role.STANDARD, Role.ADMIN)
   @Get()
   findAll() {
     return this.clientService.findAll();
   }
 
+  @Auth(Role.STANDARD, Role.ADMIN)
   @Post()
   async create(@Body() body: CreateClientDto) {
     const validationResult = CreateClientDto.safeParse(body);
@@ -65,6 +60,7 @@ export class ClientsController {
     return client;
   }*/
 
+  @Auth(Role.ADMIN)
   @Delete(':id')
   @HttpCode(204)
   async delete(@Param('id') id: string) {
@@ -75,6 +71,7 @@ export class ClientsController {
     return client;
   }
 
+  @Auth(Role.ADMIN)
   @Put(':id')
   async update(@Param('id') id: string, @Body() body: UpdateClientDto) {
     const client = await this.clientService.updateOne(id, body);
@@ -85,6 +82,7 @@ export class ClientsController {
   }
 
   //find by dni
+  @Auth(Role.STANDARD, Role.ADMIN)
   @Get('dni/:dni')
   async findByDni(@Param('dni') dni: string) {
     const data = await this.clientService.findByDni(dni);

@@ -12,7 +12,6 @@ import { CreateMovimientoDto } from './dto/create-movimiento.dto';
 import { Role } from 'src/auth/enums/rol.enum';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 
-@Auth(Role.ADMIN || Role.STANDARD)
 @Controller('clientes/movimientos')
 export class MovimientosController {
   constructor(private movimientoService: MovimientosService) {}
@@ -23,6 +22,7 @@ export class MovimientosController {
     return this.movimientoService.findAll();
   }
 
+  @Auth(Role.STANDARD, Role.ADMIN)
   @Post()
   async create(@Body() body: CreateMovimientoDto) {
     const validationResult = CreateMovimientoDto.safeParse(body);
@@ -44,6 +44,7 @@ export class MovimientosController {
     }
   }
 
+  @Auth(Role.ADMIN)
   @Get(':dni')
   async findByDni(@Param('dni') dni: string) {
     const movimiento = await this.movimientoService.findOne(dni);
