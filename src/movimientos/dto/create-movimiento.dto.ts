@@ -9,9 +9,9 @@ export const CreateMovimientoDto = z.object({
   options: z
     .string()
     .nonempty({ message: 'Debe seleccionar al menos una operación' }),
-  amount: z
-    .number()
-    .min(1, { message: 'El monto debe ser mayor que cero' }), // esto es para que el monto sea mayor que cero y sea un entero
+  amount: z.number().min(1, { message: 'El monto debe ser mayor que cero' }), // esto es para que el monto sea mayor que cero y sea un entero
+  cuentaDestino: z.string().optional(),
+  nombreDestino: z.string().optional(),
 });
 
 CreateMovimientoDto.required({

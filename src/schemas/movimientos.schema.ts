@@ -36,6 +36,18 @@ export class Movimientos {
   options: string;
 
   @Prop({
+    type: String,
+    trim: true,
+  })
+  cuentaDestino: string;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
+  nombreDestino: string;
+
+  @Prop({
     trim: true,
   })
   amount: number;
