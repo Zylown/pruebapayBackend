@@ -45,6 +45,12 @@ export class Movimientos {
     type: String,
     trim: true,
   })
+  banco: string;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
   nombreDestino: string;
 
   @Prop({

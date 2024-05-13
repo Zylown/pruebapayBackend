@@ -10,7 +10,13 @@ export const CreateMovimientoDto = z.object({
     .string()
     .nonempty({ message: 'Debe seleccionar al menos una operación' }),
   amount: z.number().min(1, { message: 'El monto debe ser mayor que cero' }), // esto es para que el monto sea mayor que cero y sea un entero
-  cuentaDestino: z.string().optional(),
+  banco: z.string().optional(),
+  cuentaDestino: z
+    .string()
+    .max(20, {
+      message: 'El número de cuenta debe tener como máximo 20 dígitos',
+    })
+    .optional(),
   nombreDestino: z.string().optional(),
 });
 
