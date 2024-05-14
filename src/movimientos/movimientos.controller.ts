@@ -44,6 +44,18 @@ export class MovimientosController {
     }
   }
 
+  @Auth(Role.STANDARD, Role.ADMIN)
+  @Get(':idMov')
+  async findById(@Param('idMov') idMov: string) {
+    const movimiento = await this.movimientoService.findById(idMov);
+    if (!movimiento) {
+      throw new BadRequestException('Id Movimiento not found');
+    }
+    return {
+      idMov: movimiento.idMov,
+    };
+  }
+
   @Auth(Role.ADMIN)
   @Get(':dni')
   async findByDni(@Param('dni') dni: string) {

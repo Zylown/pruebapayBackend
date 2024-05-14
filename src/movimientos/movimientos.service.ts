@@ -19,6 +19,11 @@ export class MovimientosService {
     return await this.movimientosModel.find();
   }
 
+  // busca un movimiento por su id
+  async findById(idMov: string) {
+    return await this.movimientosModel.findOne({ idMov });
+  }
+
   // busca un movimiento por su dni
   async findOne(dni: string) {
     return await this.movimientosModel.findOne({ dni });
