@@ -5,10 +5,10 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 // import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
 import { jwtConstants } from '../jwt.constants';
 import { JwtService } from '@nestjs/jwt';
 
+//verifica las cookies HttpOnly
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
@@ -17,7 +17,8 @@ export class JwtAuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     // console.log(request.headers.authorization);
 
-    const token = this.extractTokenFromHeader(request);
+    // const token = this.extractTokenFromHeader(request);
+    const token = request.cookies?.token;
     if (!token) {
       throw new UnauthorizedException('Token no encontrado');
     }
@@ -34,8 +35,8 @@ export class JwtAuthGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromHeader(request: Request) {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
-  }
+  // private extractTokenFromHeader(request: Request) {
+  //   const [type, token] = request.headers.authorization?.split(' ') ?? [];
+  //   return type === 'Bearer' ? token : undefined;
+  // }
 }

@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser'; // importamos cookie-parser
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +10,7 @@ async function bootstrap() {
     origin: allowedOrigins,
     credentials: true, // para que se envien las cookies
   }); // habilita el cors
+  app.use(cookieParser()); // se usa cookie-parser
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // elimina los campos que no esten en el DTO
