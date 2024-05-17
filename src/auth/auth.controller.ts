@@ -9,8 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
-import { Role } from './enums/rol.enum';
-import { Auth } from './decorators/auth.decorator';
+import { JwtService } from '@nestjs/jwt';
 
 interface RequestWithUser extends Request {
   user: {
@@ -20,7 +19,10 @@ interface RequestWithUser extends Request {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private jwtService: JwtService, // se inyecta JwtService
+  ) {}
 
   @Post('signin')
   async signIn(
@@ -29,33 +31,50 @@ export class AuthController {
   ) {
     // Lógica de autenticación en AuthService
     try {
-      const token = await this.authService.signIn(
+      const { token, role } = await this.authService.signIn(
         credentials.username,
         credentials.password,
       );
-      // Si la autenticación es exitosa, retornar el token
-      return res
-        .status(200)
-        .json({ token, message: 'Inicio de sesión exitoso' });
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict', // para que no se envíe la cookie en peticiones de terceros
+      });
+      //esto es para que el front sepa si el usuario está autenticado o no
+      return res.status(200).json({
+        authenticated: true,
+        role,
+        message: 'Inicio de sesión exitoso',
+      });
     } catch (error) {
-      // Verificar si el error es una excepción de autenticación
       if (error instanceof UnauthorizedException) {
-        // Si es una excepción de autenticación, relanzarla con el mensaje de error original
         throw new UnauthorizedException('Credenciales inválidas');
       }
-      // Si es otro tipo de error, manejarlo como lo estás haciendo actualmente
-      return res
-        .status(500)
-        .json({ message: 'Error interno del servidor, intentelo de nuevo' });
+      return res.status(500).json({ message: 'Error en el servidor' });
     }
   }
 
-  // test de roles
-  @Get('profile')
-  /*@Roles(Role.ADMIN)
-   @UseGuards(JwtAuthGuard, RolesGuard) // esto es para que se use el guard de jwt y el guard de roles*/
-  @Auth(Role.ADMIN)
-  profile(@Req() req: RequestWithUser) {
-    return this.authService.profile(req.user);
+  @Post('signout')
+  async signOut(@Res() res: Response) {
+    try {
+      res.clearCookie('token');
+      return res.status(200).json({ message: 'Cierre de sesión exitoso' });
+    } catch (error) {
+      return res.status(500).json({ message: 'Error en el servidor' });
+    }
+  }
+
+  @Get('check')
+  async checkAuth(@Req() req: Request, @Res() res: Response) {
+    try {
+      const token = req.cookies.token;
+      if (!token) {
+        return res.json({ authenticated: false });
+      }
+      const decoded = this.jwtService.verify(token);
+      return res.json({ authenticated: true, role: decoded.role });
+    } catch (error) {
+      return res.json({ authenticated: false });
+    }
   }
 }
