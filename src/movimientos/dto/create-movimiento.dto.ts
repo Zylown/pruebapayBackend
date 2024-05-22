@@ -11,6 +11,13 @@ export const CreateMovimientoDto = z.object({
     .nonempty({ message: 'Debe seleccionar al menos una operación' }),
   amount: z.number().min(1, { message: 'El monto debe ser mayor que cero' }), // esto es para que el monto sea mayor que cero y sea un entero
   banco: z.string().optional(),
+  cuentaOrigen: z
+    .string()
+    .max(20, {
+      message: 'El número de cuenta debe tener como máximo 20 dígitos',
+    })
+    .optional(),
+  nombreOrigen: z.string().optional(),
   cuentaDestino: z
     .string()
     .max(20, {
@@ -18,6 +25,12 @@ export const CreateMovimientoDto = z.object({
     })
     .optional(),
   nombreDestino: z.string().optional(),
+  phoneRecarga: z
+    .string()
+    .max(9, {
+      message: 'El número de teléfono debe tener como máximo 9 dígitos',
+    })
+    .optional(),
 });
 
 CreateMovimientoDto.required({

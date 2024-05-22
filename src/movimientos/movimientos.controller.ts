@@ -64,11 +64,12 @@ export class MovimientosController {
   }
 
   @Auth(Role.STANDARD, Role.ADMIN)
-  @Get(':idMov')
+  @Get('id/:idMov')
   async findById(@Param('idMov') idMov: string, @Req() req: Request) {
     // Verifica el token desde las cookies HttpOnly
     const token = req.cookies?.token;
     if (!token) {
+      console.log('Token no encontrado');
       throw new UnauthorizedException('Token no encontrado');
     }
 
@@ -77,13 +78,14 @@ export class MovimientosController {
       if (decoded) {
         const movimiento = await this.movimientoService.findById(idMov);
         if (!movimiento) {
-          throw new BadRequestException('Id Movimiento not found');
+          throw new BadRequestException('Id Movimiento not found'); // si no existe el movimiento con ese id
         }
         return {
-          idMov: movimiento.idMov,
+          idMov: movimiento.idMov, // si existe el movimiento con ese id
         };
       }
     } catch (error) {
+      console.log(error);
       throw new UnauthorizedException(
         'No tienes permiso para acceder a esta información',
       );

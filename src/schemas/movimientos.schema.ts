@@ -39,13 +39,25 @@ export class Movimientos {
     type: String,
     trim: true,
   })
-  cuentaDestino: string;
+  banco: string;
 
   @Prop({
     type: String,
     trim: true,
   })
-  banco: string;
+  cuentaOrigen: string;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
+  nombreOrigen: string;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
+  cuentaDestino: string;
 
   @Prop({
     type: String,
@@ -57,6 +69,12 @@ export class Movimientos {
     trim: true,
   })
   amount: number;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
+  phoneRecarga: string;
 
   @Prop({ type: String, default: formatDate })
   createdAt: string;
