@@ -58,7 +58,6 @@ export class ClientsController {
     }
   }
 
-
   @Auth(Role.ADMIN)
   @Delete(':id')
   @HttpCode(204)
@@ -95,19 +94,28 @@ export class ClientsController {
       if (decoded) {
         const data = await this.clientService.findByDni(dni);
         if (!data) {
-          throw new NotFoundException('Dni no encontrado');
+          return {
+            message: 'Dni no encontrado en la base de datos',
+            statusCode: 404,
+          };
         }
         return {
-          // dni: data?.dni,
           nombre: data?.names,
           email: data?.email,
           phone: data?.phone,
+          statusCode: 200,
         };
       }
     } catch (error) {
-      throw new UnauthorizedException(
-        'No tienes permiso para acceder a esta información',
-      );
+      // Si el token es inválido, lanza una excepción UnauthorizedException
+      throw new UnauthorizedException('Unauthorized');
     }
+  }
+
+  //get api dni
+  // @Auth(Role.STANDARD, Role.ADMIN)
+  @Get('dni/api/:dni')
+  async getApiDni(@Param('dni') dni: string) {
+    return this.clientService.getApiDni(dni);
   }
 }

@@ -43,4 +43,27 @@ export class ClientsService {
   async findByDni(dni: string) {
     return this.clientsModel.findOne({ dni });
   }
+
+  //get api dni
+  async getApiDni(dni: string) {
+    const API_URL = 'https://dniruc.apisperu.com/api/v1/dni/';
+    const API_TOKEN = process.env.API_TOKEN_PERU;
+    const response = await fetch(`${API_URL}${dni}?token=${API_TOKEN}`);
+    const data = await response.json();
+    const { nombres, apellidoPaterno, apellidoMaterno } = data;
+    const fullName = `${nombres} ${apellidoPaterno} ${apellidoMaterno}`;
+    if (data.success === false) {
+      return {
+        success: false,
+        message: 'DNI no encontrado',
+      };
+    } else {
+      return {
+        success: true,
+        data: {
+          fullName,
+        },
+      };
+    }
+  }
 }
